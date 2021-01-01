@@ -174,8 +174,16 @@ int main(int argc, char* argv[]) {
     // set brightness
     float clipped_brightness = fmin(512, (s->light_sensor*brightness_m) + brightness_b);
     smooth_brightness = fmin(255, clipped_brightness * 0.01 + smooth_brightness * 0.99);
+    if (LEON) {  
+       smooth_brightness = 1;
+     }
+    else
+    {
+      smooth_brightness = 10;
+    }
+    
     ui_set_brightness(s, (int)smooth_brightness);
-
+    
     update_offroad_layout_state(s, pm);
 
     ui_draw(s);
